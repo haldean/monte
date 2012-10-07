@@ -42,5 +42,5 @@ func (s Sphere) Intersect(ray *Ray) (*Vector, float64) {
 }
 
 func (s Sphere) Normal(loc *Vector) *Vector {
-  return Vect(0, 0, 0)
+  return loc.Sub(s.Center).NormalizeInPlace()
 }

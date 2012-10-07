@@ -25,17 +25,13 @@ func main() {
     Look: monte.NewRay(monte.Vect(0, 0, 0), monte.Vect(0, 0, 1)),
     U1: monte.Vect(1, 0, 0),
     U2: monte.Vect(0, 1, 0),
-    FDist: 1}
+    FDist: 1,
+    Sky: monte.NewColor(0, 200, 255, 255),
+    Oversample: 8,
+  }
 
   img := image.NewNRGBA(image.Rect(0, 0, *Width, *Height))
-  w, h := float64(*Width), float64(*Height)
-  for i := 0; i < *Width; i++ {
-    u := (float64(i) - w / 2.0) / (w / 2.0)
-    for j := 0; j < *Height; j++ {
-      v := (float64(j) - h / 2.0) / (h / 2.0)
-      go scene.SetColor(i, j, u, v, img)
-    }
-  }
+  scene.Render(img)
 
   out, err := os.Create(*Output)
   if err != nil {

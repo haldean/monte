@@ -16,6 +16,10 @@ func (v *Vector) Add(w *Vector) *Vector {
   return &Vector{X: v.X + w.X, Y: v.Y + w.Y, Z: v.Z + w.Z}
 }
 
+func (v *Vector) Sub(w *Vector) *Vector {
+  return &Vector{X: v.X - w.X, Y: v.Y - w.Y, Z: v.Z - w.Z}
+}
+
 func (v *Vector) Copy() *Vector {
   return &Vector{X: v.X, Y: v.Y, Z: v.Z}
 }
