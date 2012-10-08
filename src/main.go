@@ -2,19 +2,28 @@ package main
 
 import (
   "flag"
-  "fmt"
   "image"
   "image/png"
+  "log"
   "monte"
   "os"
+  "runtime/pprof"
 )
 
-var Width = flag.Int("width", 300, "width of output image")
-var Height = flag.Int("height", 300, "height of output image")
-var Output = flag.String("output", "output.png", "output PNG file")
+var width = flag.Int("width", 300, "width of output image")
+var height = flag.Int("height", 300, "height of output image")
+var output = flag.String("output", "output.png", "output PNG file")
+var cpuprofile = flag.String("cpuprofile", "", "write cpu profile to file")
 
 func main() {
   flag.Parse()
+  if *cpuprofile != "" {
+    f, err := os.Create(*cpuprofile)
+    if err != nil {
+      log.Fatal(err)
+    }
+    pprof.StartCPUProfile(f)
+  }
 
   println("Monte is go.")
 
@@ -30,14 +39,16 @@ func main() {
     Oversample: 8,
   }
 
-  img := image.NewNRGBA(image.Rect(0, 0, *Width, *Height))
+  img := image.NewNRGBA(image.Rect(0, 0, *width, *height))
   scene.Render(img)
 
-  out, err := os.Create(*Output)
+  out, err := os.Create(*output)
   if err != nil {
-    fmt.Printf("Could not open output file: %v\n", err)
+    log.Fatalf("Could not open output file: %v\n", err)
     return
   }
   png.Encode(out, img)
   out.Close()
+
+  pprof.StopCPUProfile()
 }

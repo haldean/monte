@@ -9,5 +9,5 @@ type Primitive interface {
   // Find the normal vector to the geometric primitive at a point on its
   // surface. This function should only be called with points on its surface; if
   // not its behavior is undefined.
-  Normal(loc *Vector) *Vector
+  NormalAt(loc *Vector) *Vector
 }
