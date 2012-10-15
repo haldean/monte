@@ -1,9 +1,5 @@
 package monte
 
-import (
-  "image/color"
-)
-
 type Scene struct {
   Geom []Primitive
   Look *Ray
@@ -11,8 +7,9 @@ type Scene struct {
   // scan to fill in the picture
   U1, U2 *Vector
   FDist float64
-  Sky color.NRGBA
+  Sky Colorf
   Oversample int
+  Ambient Colorf
 }
 
 func (s *Scene) DirectionAt(u, v float64) *Vector {

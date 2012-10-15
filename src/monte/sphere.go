@@ -44,3 +44,9 @@ func (s Sphere) Intersect(ray *Ray) (*Vector, float64) {
 func (s Sphere) NormalAt(loc *Vector) *Vector {
   return loc.Sub(s.Center).NormalizeInPlace()
 }
+
+func (s Sphere) BRDF(ray *Ray) Colorf {
+  return LambertBrdf(
+    ray, s.NormalAt(ray.Origin), NewColorf(1., .7, 0., 1.),
+    NewColorf(.2, .2, .2, 1.))
+}

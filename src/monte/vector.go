@@ -1,6 +1,9 @@
 package monte
 
-import "math"
+import (
+  "math"
+  "math/rand"
+)
 
 // Vector
 
@@ -51,6 +54,15 @@ func (v *Vector) NormalizeInPlace() *Vector {
 
 func (v *Vector) ScalarMul(s float64) *Vector {
   return &Vector{X: v.X * s, Y: v.Y * s, Z: v.Z * s}
+}
+
+func RandomVectorInHemisphere(v *Vector) *Vector {
+  test := Vect(rand.Float64(), rand.Float64(), rand.Float64())
+  test.NormalizeInPlace()
+  if test.Dot(v) < 0 {
+    return test.ScalarMul(-1)
+  }
+  return test
 }
 
 // Ray
